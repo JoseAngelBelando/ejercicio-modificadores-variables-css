@@ -6,14 +6,26 @@ body {
   font-family: sans-serif;
   margin: 0;
   min-height: 500vh;
+  
 }
-.red{
+.box-scroll{
   position: fixed;
-  top: 0;
-  left: 0;
-  background-color: var(--primary-color);
-  width: var(--div-width);
+  width: var(--box-width);
+  height: 50px;
+  background-color: red;
 }
 .scroll-count{
   position: fixed;
+}
+button{
+  margin-top: 100px;
+}
+.box-mouse{
+  position: fixed;
+  top: var(--top);
+  left: var(--left);
+  width: 20px;
+  height: 20px;
+  background-color: red;
+  pointer-events: none;
 }

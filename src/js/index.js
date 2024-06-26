@@ -7,23 +7,57 @@ import '../scss/styles.scss';
 // - Crea un div de color rojo y colócalo en la parte superior izquierda de tu web. Haz que tu web tenga un min-height de 500vh para generar scroll. El div deberá sincronizarse con el scroll, si estás arriba del todo medirá 0 de ancho y si está abajo del todo medirá el 100%, según vayas haciendo scroll el div deberá ir creciendo o encogiendo en función de si subes o bajas.
 
 const rootStyles = document.documentElement.style;
+const scrollCountElement = document.getElementById('scroll-count');
 
-const setBoxScroll = event => {
+const setBoxScroll = () => {
   // document.body.scrollHeight es el alto total de la pagina
   // window.innerHeight devuelve el valor numerico que representa  la altura, en píxeles, de la ventana de visualización actual.
   const totalHeight = document.body.scrollHeight - window.innerHeight;
   const userScroll = window.scrollY;
 
-  // - Añade un h1 al ejercicio anterior que te diga cuantos px te has desplazado.
   scrollCountElement.textContent = Math.round(userScroll);
 
   const boxWidth = (userScroll * 100) / totalHeight;
 
-  rootStyles.setProperty('--div-width', boxWidth + '%');
+  rootStyles.setProperty('--box-width', boxWidth + '%');
+  // - Añade un h1 al ejercicio anterior que te diga cuantos px te has desplazado.
 };
-
 window.addEventListener('scroll', setBoxScroll);
 
 // - Crea dos botones en tu web para que al pulsarlos generen un color aleatorio para el body y se aplique. Haz una función para generarlo en RGB y otra para generarlo en hexadecimal y ejecuta cada una desde un botón
 
+const buttonRgbElement = document.getElementById('button-rgb');
+const buttonHexaElement = document.getElementById('button-hexa');
+
+const generateRGBColor = () => {
+  const red = Math.floor(Math.random() * 255);
+  const green = Math.floor(Math.random() * 255);
+  const blue = Math.floor(Math.random() * 255);
+
+  const color = `rgb(${red}, ${green}, ${blue})`;
+
+  rootStyles.setProperty('--bg-color', color);
+};
+
+const generateHexaColor = () => {
+  const hexaValues = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    const randomPosition = Math.floor(Math.random() * hexaValues.length - 1);
+    const randomCharacter = hexaValues.charAt(randomPosition);
+    color += randomCharacter;
+  }
+  rootStyles.setProperty('--bg-color', color);
+};
+
+buttonRgbElement.addEventListener('click', generateRGBColor);
+buttonHexaElement.addEventListener('click', generateHexaColor);
+
 // - Crea un div de 20px x 20px y sincronizalo con el movimiento del ratón, el div deberá quedarse pegado a la flecha de tu ratón y moverse junto a él.
+
+const setBoxPosition = event => {
+  rootStyles.setProperty('--top', event.y + 'px');
+  rootStyles.setProperty('--left', event.x + 'px');
+};
+
+window.addEventListener('mousemove', setBoxPosition);
