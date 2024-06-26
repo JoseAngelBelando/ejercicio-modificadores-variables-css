@@ -8,14 +8,21 @@ import '../scss/styles.scss';
 
 const rootStyles = document.documentElement.style;
 
-window.addEventListener('scroll', () => {
-  const scroll = window.scrollY;
-  const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
-  const scrollPercent = scroll / documentHeight;
-  rootStyles.setProperty('--div-width', `${scrollPercent * 100}%`);
-});
+const setBoxScroll = event => {
+  // document.body.scrollHeight es el alto total de la pagina
+  // window.innerHeight devuelve el valor numerico que representa  la altura, en píxeles, de la ventana de visualización actual.
+  const totalHeight = document.body.scrollHeight - window.innerHeight;
+  const userScroll = window.scrollY;
 
-// - Añade un h1 al ejercicio anterior que te diga cuantos px te has desplazado.
+  // - Añade un h1 al ejercicio anterior que te diga cuantos px te has desplazado.
+  scrollCountElement.textContent = Math.round(userScroll);
+
+  const boxWidth = (userScroll * 100) / totalHeight;
+
+  rootStyles.setProperty('--div-width', boxWidth + '%');
+};
+
+window.addEventListener('scroll', setBoxScroll);
 
 // - Crea dos botones en tu web para que al pulsarlos generen un color aleatorio para el body y se aplique. Haz una función para generarlo en RGB y otra para generarlo en hexadecimal y ejecuta cada una desde un botón
 
